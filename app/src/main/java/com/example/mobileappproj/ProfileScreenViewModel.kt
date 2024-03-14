@@ -26,7 +26,7 @@ class ProfileScreenViewModel  @Inject constructor(private val repository :AuthRe
     }
     fun getUserProfile(userId: String): LiveData<UserProfile> {
         val userProfileLiveData = MutableLiveData<UserProfile>()
-        db.collection("userProfiles").document(userId).get()
+        db.collection("users").document(userId).get()
             .addOnSuccessListener { documentSnapshot ->
                 val userProfile = documentSnapshot.toObject(UserProfile::class.java)
                 userProfile?.let { userProfileLiveData.value = it }
