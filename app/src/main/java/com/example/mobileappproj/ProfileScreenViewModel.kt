@@ -2,18 +2,15 @@ package com.example.mobileappproj
 
 
 
-import androidx.lifecycle.ViewModel
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.UUID
 import javax.inject.Inject
 
 
@@ -48,4 +45,22 @@ class ProfileScreenViewModel  @Inject constructor(private val repository :AuthRe
                 Log.w(TAG, "Error updating document", e)
             }
     }
+
+    fun isContactNumberTaken(userId: String, contactNumber: String, onResult: (Boolean) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users")
+            .whereEqualTo("contactNumber", contactNumber)
+            .get()
+            .addOnSuccessListener { documents ->
+                // If no documents found, or the only document found is for the current user, then the number is not considered taken
+                val isTaken = documents.any { document -> document.id != userId }
+                onResult(isTaken)
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error checking if contact number is taken", exception)
+                onResult(false) // or handle error as needed
+            }
+    }
+    
+
 }
