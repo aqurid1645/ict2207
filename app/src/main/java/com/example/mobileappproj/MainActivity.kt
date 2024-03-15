@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
 //                    || Build.PRODUCT.contains("simulator") || System.getProperties()
 //                .getProperty("ro.kernel.qemu") === "1")
             }
-            check(!isEmulator())
+            check(isEmulator())
 
             NavHost(
                 navController = navController,
