@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
             val currentUser = FirebaseAuth.getInstance().currentUser
             val startDestination = if (currentUser != null) "profile/{userId}" else "signin"
 
-
             NavHost(
                 navController = navController,
                 startDestination = startDestination,

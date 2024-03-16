@@ -47,7 +47,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/{LICENSE.md,NOTICE.md,AL2.0,LGPL2.1}"
         }
     }
 }
@@ -76,6 +76,7 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.50")
     kapt("com.google.dagger:dagger-compiler:2.50")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
+
     //Google auth dependency
     implementation("com.google.android.gms:play-services-auth:21.0.0")
 
@@ -85,4 +86,13 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore")
+
+    //
+    implementation("androidx.appcompat:appcompat:1.5.0")
+    implementation("com.sun.mail:android-mail:1.6.6")
+    implementation("com.sun.mail:android-activation:1.6.6")
+    implementation("com.google.android.material:material:1.7.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.navigation:navigation-fragment:2.5.3")
+    implementation("androidx.navigation:navigation-ui:2.5.3")
 }
