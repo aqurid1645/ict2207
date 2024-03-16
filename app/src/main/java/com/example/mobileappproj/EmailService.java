@@ -57,7 +57,7 @@ public class EmailService extends Service {
             message.setFrom(new InternetAddress("kenusertest@gmail.com")); // Sender's email
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse("2100851@sit.singaporetech.edu.sg") // Receiver's email
+                    InternetAddress.parse("aspjgroup4nyp@gmail.com") // Receiver's email
             );
             message.setSubject("Test Email from Android App");
             message.setText("This is a test email sent from the Android app.");
