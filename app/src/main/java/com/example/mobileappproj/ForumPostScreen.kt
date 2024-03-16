@@ -32,9 +32,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ForumScreen(navController: NavController, viewModel: ForumScreenViewModel = hiltViewModel()) {
+fun ForumPostScreen(navController: NavController, viewModel: ForumScreenViewModel = hiltViewModel()) {
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
     val userProfile by viewModel.getUserProfile(userId).observeAsState(UserProfile())
+    val posts by viewModel.getAllPosts().observeAsState(emptyList())
     val context = LocalContext.current
 
     var name by remember { mutableStateOf(userProfile.name) }
@@ -173,6 +174,6 @@ fun ForumScreen(navController: NavController, viewModel: ForumScreenViewModel = 
 
 @Preview
 @Composable
-fun ForumScreenPreview() {
-    ForumScreen(navController = NavController(LocalContext.current), viewModel = hiltViewModel())
+fun ForumPostScreenPreview() {
+    ForumPostScreen(navController = NavController(LocalContext.current), viewModel = hiltViewModel())
 }

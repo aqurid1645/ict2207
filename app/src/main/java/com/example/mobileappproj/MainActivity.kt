@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
 
             // Directly check if the user is signed in
             val currentUser = FirebaseAuth.getInstance().currentUser
-            val startDestination = if (currentUser != null) "profile/{userId}" else "signin"
+            val startDestination = if (currentUser != null) "forum" else "signin"
 
             NavHost(
                 navController = navController,
@@ -42,24 +42,28 @@ class MainActivity : ComponentActivity() {
                     val userId = backStackEntry.arguments?.getString("userId") ?: ""
                     ForumScreen(navController = navController)
                 }
+                composable("forum-post") { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId") ?: ""
+                    ForumPostScreen(navController = navController)
+                }
                 composable("resetpassword") {
                    ChangePasswordScreen(navController = navController)
                 }
             }
 
 //             If the user is signed in, navigate to the profile screen once the nav graph is ready
-            if (currentUser != null) {
-                val userId = currentUser.uid
-                // Ensure we only navigate once when the content is first set
-                LaunchedEffect(key1 = userId) {
-                    navController.navigate("profile/$userId") {
-                        // Clear back stack
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
-                        }
-                    }
-                }
-            }
+//            if (currentUser != null) {
+//                val userId = currentUser.uid
+//                // Ensure we only navigate once when the content is first set
+//                LaunchedEffect(key1 = userId) {
+//                    navController.navigate("profile/$userId") {
+//                        // Clear back stack
+//                        popUpTo(navController.graph.startDestinationId) {
+//                            inclusive = true
+//                        }
+//                    }
+//                }
+//            }
         }
     }
 }
