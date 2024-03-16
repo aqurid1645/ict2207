@@ -109,6 +109,16 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileScreenViewMode
         }
         Spacer(modifier = Modifier.padding(vertical = 8.dp))
 
+        // Forum
+        Button(onClick = {
+            navController.navigate("forum") {
+                popUpTo(0) { inclusive = true }
+            }
+        }) {
+            Text("Forum")
+        }
+        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
         // Logout Button
         Button(onClick = {
             viewModel.signout()

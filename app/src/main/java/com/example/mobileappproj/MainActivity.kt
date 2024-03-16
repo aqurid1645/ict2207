@@ -38,12 +38,16 @@ class MainActivity : ComponentActivity() {
                     val userId = backStackEntry.arguments?.getString("userId") ?: ""
                     ProfileScreen(navController = navController)
                 }
+                composable("forum") { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId") ?: ""
+                    ForumScreen(navController = navController)
+                }
                 composable("resetpassword") {
                    ChangePasswordScreen(navController = navController)
                 }
             }
 
-            // If the user is signed in, navigate to the profile screen once the nav graph is ready
+//             If the user is signed in, navigate to the profile screen once the nav graph is ready
             if (currentUser != null) {
                 val userId = currentUser.uid
                 // Ensure we only navigate once when the content is first set
