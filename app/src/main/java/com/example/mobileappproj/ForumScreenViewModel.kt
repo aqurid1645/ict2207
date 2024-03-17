@@ -23,7 +23,7 @@ data class ForumPost(
 class ForumScreenViewModel  @Inject constructor(private val repository :AuthRepo) :ViewModel() {
     private val db = Firebase.firestore
 
-    fun getUserProfile(userId: String): LiveData<UserProfile> {
+    fun getForumUserProfile(userId: String): LiveData<UserProfile> {
         val userProfileLiveData = MutableLiveData<UserProfile>()
         db.collection("users").document(userId).get()
             .addOnSuccessListener { documentSnapshot ->

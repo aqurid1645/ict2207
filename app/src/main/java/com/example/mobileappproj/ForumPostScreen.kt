@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ForumPostScreen(navController: NavController, viewModel: ForumScreenViewModel = hiltViewModel()) {
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-    val userProfile by viewModel.getUserProfile(userId).observeAsState(UserProfile())
+    val userProfile by viewModel.getForumUserProfile(userId).observeAsState(UserProfile())
     val posts by viewModel.getAllPosts().observeAsState(emptyList())
     val context = LocalContext.current
 
