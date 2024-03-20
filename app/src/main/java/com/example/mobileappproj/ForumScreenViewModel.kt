@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,7 +19,7 @@ data class ForumPost(
     val timestamp: Long = System.currentTimeMillis()
 )
 @HiltViewModel
-class ForumScreenViewModel  @Inject constructor(private val repository :AuthRepo) :ViewModel() {
+class ForumScreenViewModel  @Inject constructor() :ViewModel() {
     private val db = Firebase.firestore
 
     fun getForumUserProfile(userId: String): LiveData<UserProfile> {

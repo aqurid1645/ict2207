@@ -3,7 +3,6 @@ package com.example.mobileappproj
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +20,7 @@ class MainActivity : ComponentActivity() {
 
             // Directly check if the user is signed in
             val currentUser = FirebaseAuth.getInstance().currentUser
-            val startDestination = if (currentUser != null) "forum" else "signin"
+            val startDestination = if (currentUser != null) "profile/{userId}" else "signin"
 
             NavHost(
                 navController = navController,
