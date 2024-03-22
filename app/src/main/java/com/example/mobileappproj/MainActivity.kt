@@ -41,6 +41,10 @@ class MainActivity : ComponentActivity() {
                     val userId = backStackEntry.arguments?.getString("userId") ?: ""
                     ForumScreen(navController = navController)
                 }
+                composable("chat") { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId") ?: ""
+                    ChatScreen(navController = navController, userId = userId)
+                }
                 composable("forum-post") { backStackEntry ->
                     val userId = backStackEntry.arguments?.getString("userId") ?: ""
                     ForumPostScreen(navController = navController)

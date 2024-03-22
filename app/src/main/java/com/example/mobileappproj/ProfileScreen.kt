@@ -45,8 +45,6 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileScreenViewMode
     val roleOptions = listOf("Teacher", "Student")
     var isEditingAnyField by remember { mutableStateOf(false) }
 
-
-
     LaunchedEffect(userProfile) {
         name = userProfile.name
         bio = userProfile.bio
@@ -55,6 +53,8 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileScreenViewMode
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
+        
+        Text(text = userId)
         ProfileInfoItem(
             label = "Name",
             value = name,
@@ -117,7 +117,15 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileScreenViewMode
         }) {
             Text("Forum")
         }
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
+        // Chat
+        Button(onClick = {
+            navController.navigate("chat") {
+                popUpTo(0) { inclusive = true }
+            }
+        }) {
+            Text("Chat")
+        }
 
         // Logout Button
         Button(onClick = {
