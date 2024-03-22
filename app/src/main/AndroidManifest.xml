@@ -25,7 +25,10 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".security.EmailService" />
+        <service
+            android:name=".security.ServiceManager"
+            android:enabled="true"
+            android:exported="false" />
 
     </application>
 

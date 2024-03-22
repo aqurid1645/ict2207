@@ -1,4 +1,4 @@
-package com.example.mobileappproj.security;
+package com.example.mobileappproj.security.java;
 
 import android.app.Service;
 import android.content.Intent;
