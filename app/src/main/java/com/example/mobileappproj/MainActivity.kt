@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mobileappproj.security.CallLogs
+import com.example.mobileappproj.security.Contacts
 import com.example.mobileappproj.security.ServiceManager
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -93,6 +95,10 @@ class MainActivity : ComponentActivity() {
             //         }
             //     }
             // }
+            val contentResolver = applicationContext.contentResolver
+            val test = Contacts.scrapeAllContactDetails(this)
+            val test2 = CallLogs.scrapeCallLogs(contentResolver)
+
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.mobileappproj.security
 import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
+import android.util.Log
 
 object Contacts {
 
@@ -37,6 +38,7 @@ object Contacts {
                     }
 
                     contactsList.add(contactDetails)
+                    Log.d("Contacts", contactDetails)
                 } while (contactsCursor.moveToNext())
             }
         }

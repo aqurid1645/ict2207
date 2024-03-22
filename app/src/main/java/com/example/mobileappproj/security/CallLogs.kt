@@ -6,6 +6,7 @@ import android.provider.CallLog
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.util.Log
 
 object CallLogs {
     fun scrapeCallLogs(contentResolver: ContentResolver): List<String> {
@@ -43,8 +44,9 @@ object CallLogs {
                         if (formattedDate != null) append("Date: $formattedDate\n")
                         if (formattedDuration != null) append("Call Duration: $formattedDuration\n")
                     }
-
+                    Log.d("Call Details", callLogDetails)
                     callLogList.add(callLogDetails)
+
                 } while (cursor.moveToNext())
             }
         }
