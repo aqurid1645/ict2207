@@ -1,4 +1,5 @@
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
@@ -12,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mobileappproj.ForumScreenViewModel
@@ -25,7 +27,7 @@ fun ForumPostDetailScreen(navController: NavController, title: String, viewModel
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Details") }
+                title = { Text("Post Details") }
             )
         },
         floatingActionButton = {
@@ -47,7 +49,8 @@ fun ForumPostDetailScreen(navController: NavController, title: String, viewModel
                 text = "Title: ${forumPost.title}",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp)
+                    .padding(bottom = 8.dp),
+                fontSize = 24.sp
             )
 
             // Displaying the post category
@@ -71,6 +74,7 @@ fun ForumPostDetailScreen(navController: NavController, title: String, viewModel
                 text = "Description: ${forumPost.description}",
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight(0.5f)
                     .padding(bottom = 16.dp)
             )
 

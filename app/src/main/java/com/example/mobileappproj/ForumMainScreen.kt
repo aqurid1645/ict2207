@@ -43,7 +43,7 @@ fun ForumMainScreen(navController: NavController, viewModel: ForumScreenViewMode
                 PostItem(
                     postTitle = post.title+"\n by ${post.userName}",
                     onClick = {
-                        navController.navigate("forum-detail/{${post.title}}")
+                        navController.navigate("forum-detail/${post.title}")
                     }
                 )
                 Divider()
