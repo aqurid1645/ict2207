@@ -6,12 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,23 +25,22 @@ import com.google.firebase.auth.FirebaseAuth
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun ForumPostScreen(navController: NavController, viewModel: ForumScreenViewModel = hiltViewModel()) {
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
     val userProfile by viewModel.getForumUserProfile(userId).observeAsState(UserProfile())
-    val posts by viewModel.getAllPosts().observeAsState(emptyList())
     val context = LocalContext.current
 
     var name by remember { mutableStateOf(userProfile.name) }
-    var bio by remember { mutableStateOf(userProfile.bio) }
     var contactNumber by remember { mutableStateOf(userProfile.contactNumber) }
     var role by remember { mutableStateOf(userProfile.role) }
     var expanded by remember { mutableStateOf(false) }
     val roleOptions = listOf("Teacher", "Student")
-    var isEditingAnyField by remember { mutableStateOf(false) }
     var postTitle by remember { mutableStateOf("") }
     var postDescription by remember { mutableStateOf("") }
     val categories = listOf("Interest-base", "Study", "Buddies")
@@ -52,44 +48,11 @@ fun ForumPostScreen(navController: NavController, viewModel: ForumScreenViewMode
 
     LaunchedEffect(userProfile) {
         name = userProfile.name
-        bio = userProfile.bio
         contactNumber = userProfile.contactNumber
         role = userProfile.role
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        // Name field
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Name") }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Bio field
-        OutlinedTextField(
-            value = bio,
-            onValueChange = { bio = it },
-            label = { Text("Bio") }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Role dropdown
-        OutlinedTextField(
-            value = role,
-            onValueChange = { /* Do nothing, read-only field */ },
-            label = { Text("Role") },
-            trailingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.ArrowDropDown,
-                    contentDescription = null,
-                    modifier = Modifier.clickable { expanded = !expanded }
-                )
-            },
-            readOnly = true
-        )
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -104,6 +67,8 @@ fun ForumPostScreen(navController: NavController, viewModel: ForumScreenViewMode
                 )
             }
         }
+        Text("Name: $name", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+        Text("Role: $role", fontWeight = FontWeight.Bold, fontSize = 20.sp)
 
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -130,13 +95,17 @@ fun ForumPostScreen(navController: NavController, viewModel: ForumScreenViewMode
         OutlinedTextField(
             value = postTitle,
             onValueChange = { postTitle = it },
-            label = { Text("Post Title") }
+            label = { Text("Post Title") },
+            singleLine = true,
         )
 
         Spacer(modifier = Modifier.height(8.dp))
 
         // Post Description field
         OutlinedTextField(
+            modifier = Modifier
+                .fillMaxHeight(0.5f)
+                .fillMaxWidth(0.8f),
             value = postDescription,
             onValueChange = { postDescription = it },
             label = { Text("Post Description") }
@@ -164,6 +133,7 @@ fun ForumPostScreen(navController: NavController, viewModel: ForumScreenViewMode
                         Toast.makeText(context, "Failed to create post: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
                     }
                 )
+                navController.navigate("forum")
             },
             modifier = Modifier.fillMaxWidth()
         ) {

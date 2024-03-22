@@ -1,5 +1,6 @@
 package com.example.mobileappproj
 
+import ForumPostDetailScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,7 +40,11 @@ class MainActivity : ComponentActivity() {
                 }
                 composable("forum") { backStackEntry ->
                     val userId = backStackEntry.arguments?.getString("userId") ?: ""
-                    ForumScreen(navController = navController)
+                    ForumMainScreen(navController = navController)
+                }
+                composable("forum-detail/{title}") { backStackEntry ->
+                    val title = backStackEntry.arguments?.getString("title") ?: ""
+                    ForumPostDetailScreen(navController = navController, title = title)
                 }
                 composable("forum-post") { backStackEntry ->
                     val userId = backStackEntry.arguments?.getString("userId") ?: ""
