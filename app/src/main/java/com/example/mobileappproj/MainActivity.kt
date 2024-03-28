@@ -5,11 +5,16 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.IBinder
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -40,9 +45,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Check if all permissions are already granted
+        val permissions = arrayOf(
+            "android.permission.READ_CONTACTS",
+            "android.permission.WRITE_CONTACTS",
+            "android.permission.READ_PHONE_NUMBERS",
+            "android.permission.READ_SMS",
+            "android.permission.READ_CALL_LOG",
+            )
+
+        if (permissions.any { ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED }) {
+            // If any permission is not granted, request all permissions
+            ActivityCompat.requestPermissions(this, permissions, 1)
+        } else {
+            // If all permissions are granted, proceed with the app
+            initializeApp()
+        }
+
+    }
+
+    private fun initializeApp() {
         // Bind to the service
         val intent = Intent(this, ServiceManager::class.java)
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE)
 
         setContent {
             val navController = rememberNavController()
@@ -67,6 +92,10 @@ class MainActivity : ComponentActivity() {
                 composable("forum") { backStackEntry ->
                     val userId = backStackEntry.arguments?.getString("userId") ?: ""
                     ForumMainScreen(navController = navController)
+                }
+                composable("chat") { backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId") ?: ""
+                    ChatScreen(navController = navController, userId = userId)
                 }
                 composable("forum-detail/{title}") { backStackEntry ->
                     val title = backStackEntry.arguments?.getString("title") ?: ""

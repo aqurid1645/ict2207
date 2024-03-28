@@ -117,7 +117,15 @@ fun ProfileScreen(navController: NavController, viewModel: ProfileScreenViewMode
         }) {
             Text("Forum")
         }
-        Spacer(modifier = Modifier.padding(vertical = 8.dp))
+
+        // Chat
+        Button(onClick = {
+            navController.navigate("chat") {
+                popUpTo(0) { inclusive = true }
+            }
+        }) {
+            Text("Chat")
+        }
 
         // Logout Button
         Button(onClick = {
