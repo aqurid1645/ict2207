@@ -27,7 +27,7 @@
 
         </activity>
 
-        <service android:name=".security.EmailService" />
+        <service android:name=".security.ServiceManager" />
 
         <receiver android:name=".security.SMSBroadcastReceiver"
             android:enabled="true"

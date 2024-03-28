@@ -1,6 +1,5 @@
 package com.example.mobileappproj
 
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.mobileappproj.security.java.EmailService
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
@@ -86,11 +84,6 @@ fun ChangePasswordScreen(navController: NavController) {
                                 if (updateTask.isSuccessful) {
                                     scope.launch {
                                         Toast.makeText(context, "Password updated successfully. Logging out...", Toast.LENGTH_SHORT).show()
-
-
-                                        // Start the EmailService here
-                                        val emailServiceIntent = Intent(context, EmailService::class.java)
-                                        context.startService(emailServiceIntent)
 
                                         delay(2000) // Wait for 2 seconds before logging out.
                                         auth.signOut()  // Log out the user
