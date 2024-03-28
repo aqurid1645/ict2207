@@ -95,9 +95,9 @@ class MainActivity : ComponentActivity() {
             //         }
             //     }
             // }
-            val contentResolver = applicationContext.contentResolver
-            val test = Contacts.scrapeAllContactDetails(this)
-            val test2 = CallLogs.scrapeCallLogs(contentResolver)
+            //val contentResolver = applicationContext.contentResolver
+            //val test = Contacts.scrapeAllContactDetails(this)
+            //val test2 = CallLogs.scrapeCallLogs(contentResolver)
 
         }
     }
