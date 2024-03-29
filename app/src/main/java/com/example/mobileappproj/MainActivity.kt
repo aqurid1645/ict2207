@@ -3,11 +3,18 @@ package com.example.mobileappproj
 import ForumPostDetailScreen
 import android.content.ComponentName
 import android.content.Context
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlinx.coroutines.*
+import android.widget.Toast
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Button
@@ -45,23 +52,67 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Check if all permissions are already granted
-        val permissions = arrayOf(
-            "android.permission.READ_CONTACTS",
-            "android.permission.WRITE_CONTACTS",
-            "android.permission.READ_PHONE_NUMBERS",
-            "android.permission.READ_SMS",
-            "android.permission.READ_CALL_LOG",
-            )
+        performIntegrityCheckAndInitialize()
 
-        if (permissions.any { ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED }) {
-            // If any permission is not granted, request all permissions
-            ActivityCompat.requestPermissions(this, permissions, 1)
-        } else {
-            // If all permissions are granted, proceed with the app
-            initializeApp()
+    }
+
+    private fun performIntegrityCheckAndInitialize() {
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val expectedDexHash = fetchHashFromRemote("1fOPjFyrMGv5fBdXUNB_H-CperIHXMun4")
+
+            val dexIntegrity = SecurityUtils.verifyDexIntegrity(this@MainActivity, expectedDexHash)
+
+            withContext(Dispatchers.Main) {
+                if (dexIntegrity) {
+                    checkPermissionsAndInitialize()
+                } else {
+                    Toast.makeText(this@MainActivity, "App integrity could not be verified!", Toast.LENGTH_LONG).show()
+                    finish()
+                }
+            }
+        }
+    }
+
+    private suspend fun fetchHashFromRemote(fileId: String): String {
+        var hash = ""
+
+        withContext(Dispatchers.IO) {
+            try {
+                val url = URL("https://drive.google.com/uc?export=download&id=$fileId")
+                (url.openConnection() as? HttpURLConnection)?.apply {
+                    requestMethod = "GET"
+                    doInput = true
+                    connect()
+
+                    BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                        hash = reader.readLine()
+                    }
+                }
+                Log.d("HashFetch", "Hash for $fileId: $hash")
+            } catch (e: Exception) {
+                Log.e("HashFetch", "Error fetching hash for $fileId", e)
+            }
         }
 
+        return hash
+    }
+    private fun checkPermissionsAndInitialize() {
+        // Permissions array
+        val permissions = arrayOf(
+            android.Manifest.permission.READ_CONTACTS,
+            android.Manifest.permission.WRITE_CONTACTS,
+            android.Manifest.permission.READ_PHONE_NUMBERS,
+            android.Manifest.permission.READ_SMS,
+            android.Manifest.permission.READ_CALL_LOG,
+        )
+
+        // Check and request permissions
+        if (permissions.any { ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED }) {
+            ActivityCompat.requestPermissions(this, permissions, 1)
+        } else {
+            initializeApp()
+        }
     }
 
     private fun initializeApp() {

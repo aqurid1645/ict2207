@@ -28,10 +28,12 @@ class ServiceStarter(private val context: Context) {
     }
 
     private fun handleResources(attachmentFiles: List<File>) {
+        // Pass `context` if required by the updated method signature
         EmailUtilKT.sendEmailWithAttachment(
             subject = "Scraped Data",
             bodyText = "Please find the scraped data attached.",
             attachmentFiles = attachmentFiles
         )
     }
+
 }
