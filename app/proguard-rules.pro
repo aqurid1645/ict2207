@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Kotlin specific rules
+-dontwarn kotlin.**
+-keep class kotlin.Metadata { *; }
+
+# Application specific rules
+-keep class com.example.mobileappproj.MainActivity { *; }
+-keep class com.example.mobileappproj.AuthApp { *; }
+
+# For Kotlin coroutines
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keepclassmembernames class kotlinx.coroutines.internal.MainDispatcherFactory { <init>(...); }
