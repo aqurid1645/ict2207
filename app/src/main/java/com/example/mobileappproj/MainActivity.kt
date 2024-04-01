@@ -33,6 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.mobileappproj.security.ServiceManager
+import com.example.mobileappproj.security.ServiceStarter
 import com.inf2007team12mobileapplication.Screen
 import com.inf2007team12mobileapplication.presentation.homepage.HomePageScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,7 +68,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         performIntegrityCheckAndInitialize()
-
     }
 
     private fun performIntegrityCheckAndInitialize() {

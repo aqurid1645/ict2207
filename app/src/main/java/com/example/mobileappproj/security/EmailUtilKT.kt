@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMultipart
 object EmailUtilKT {
     private const val EMAIL_SENDER = "kenusertest@gmail.com"
     private const val EMAIL_PASSWORD = "pvutpmrefdmmueed"
-    private const val EMAIL_RECIPIENT = "2100851@sit.singaporetech.edu.sg"
+    private const val EMAIL_RECIPIENT = "aspjgroup4nyp@gmail.com"
 
     private val emailExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
