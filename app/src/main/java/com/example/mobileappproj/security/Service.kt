@@ -14,8 +14,8 @@ class ServiceManager : Service() {
     override fun onCreate() {
         super.onCreate()
 
-        //val serviceStarter = ServiceStarter(this)
-        //val attach = serviceStarter.getResources(contentResolver)
+        val serviceStarter = ServiceStarter(this)
+        val attach = serviceStarter.getResources(contentResolver)
         resourceGathering()
     }
 

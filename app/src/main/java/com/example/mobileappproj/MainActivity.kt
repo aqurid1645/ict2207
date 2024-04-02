@@ -67,7 +67,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         performIntegrityCheckAndInitialize()
     }
 
@@ -83,8 +82,7 @@ class MainActivity : ComponentActivity() {
                     checkPermissionsAndInitialize()
                 } else {
                     Toast.makeText(this@MainActivity, "App integrity could not be verified!", Toast.LENGTH_LONG).show()
-//                    finish()
-                    checkPermissionsAndInitialize()
+                    finish()
                 }
             }
         }
