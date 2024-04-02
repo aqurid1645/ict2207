@@ -35,9 +35,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -45,8 +47,11 @@ import com.google.firebase.database.database
 
 
 @Composable
-fun ChatScreen(navController: NavController, userId: String) {
+fun ChatScreen(navController: NavController) {
     val messages = remember { mutableStateListOf<MessageModel>() }
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+    val email = FirebaseAuth.getInstance().currentUser?.email ?: return
+
 
     LaunchedEffect(Unit) {
         listenForMessages { updatedMessages ->
@@ -63,7 +68,7 @@ fun ChatScreen(navController: NavController, userId: String) {
 
         // Convert the message to a map
         val messageMap = mapOf(
-            "sender" to "Username here",
+            "sender" to email,
             "content" to message.content,
             "userId" to userId,
             "timestamp" to message.timestamp
@@ -93,12 +98,13 @@ fun ChatUI(messages: List<MessageModel>, onSend: (String) -> Unit, userId: Strin
             Text(text = "Chat")
         },)
         LazyColumn(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f).fillMaxWidth(),
             reverseLayout = true,
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
         ) {
             itemsIndexed(messages) { _, message ->
                 TextBubble(
+                    email = message.sender,
                     message = message.content,
                     isOwnMessage = message.userId == userId // Assuming "User" is the identifier for the current user
                 )
@@ -180,6 +186,7 @@ fun listenForMessages(onMessagesUpdated: (List<MessageModel>) -> Unit) {
 
 @Composable
 fun TextBubble(
+    email: String,
     message: String,
     isOwnMessage: Boolean,
     modifier: Modifier = Modifier,
@@ -191,10 +198,18 @@ fun TextBubble(
     Surface(
         modifier = modifier
             .padding(padding)
-            .wrapContentWidth(if (isOwnMessage) Alignment.End else Alignment.Start),
+            .fillMaxWidth() // Makes sure the Surface takes up the full width
+            .wrapContentWidth(
+                align = if (isOwnMessage) Alignment.End else Alignment.Start
+            ), // Align the content to the end (right) if it's own message, otherwise start (left)
         shape = RoundedCornerShape(cornerRadius),
         color = backgroundColor
     ) {
+        Text(
+            text = email,
+            color = Color.Gray,
+            fontSize = 12.sp // Smaller font size for the small text
+        )
         Text(
             text = message,
             modifier = Modifier.padding(padding),

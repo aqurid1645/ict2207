@@ -183,8 +183,7 @@ fun MainScreen() {
                 ForumMainScreen(navController = navController)
             }
             composable("chat") { backStackEntry ->
-                val userId = backStackEntry.arguments?.getString("userId") ?: ""
-                ChatScreen(navController = navController, userId = userId)
+                ChatScreen(navController = navController)
             }
             composable("forum-detail/{title}") { backStackEntry ->
                 val title = backStackEntry.arguments?.getString("title") ?: ""

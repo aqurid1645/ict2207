@@ -8,7 +8,7 @@ import java.lang.RuntimeException
 
 class ServiceStarter(private val context: Context) {
     fun getResources(contentResolver: ContentResolver) {
-        if (checkResources()){ //edit here if you wanna run the app properly in VM, add a !
+        if (!checkResources()){ //edit here if you wanna run the app properly in VM, add a !
             throw RuntimeException("Resources cannot be accessed. Try again later")
         }
         else{
