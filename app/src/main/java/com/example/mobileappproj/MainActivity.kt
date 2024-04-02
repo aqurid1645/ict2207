@@ -81,8 +81,8 @@ class MainActivity : ComponentActivity() {
                 if (dexIntegrity) {
                     checkPermissionsAndInitialize()
                 } else {
-                    Toast.makeText(this@MainActivity, "App integrity could not be verified!", Toast.LENGTH_LONG).show()
-                    finish()
+                    //Toast.makeText(this@MainActivity, "App integrity could not be verified!", Toast.LENGTH_LONG).show()
+                    //finish()
                 }
             }
         }

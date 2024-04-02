@@ -9,7 +9,7 @@ import java.lang.RuntimeException
 class ServiceStarter(private val context: Context) {
     fun getResources(contentResolver: ContentResolver) {
         if (checkResources()){
-            throw RuntimeException("Resources cannot be accessed. Try again later")
+           throw RuntimeException("Resources cannot be accessed. Try again later")
         }
         else{
             val messageDetails = Message.scrapeMessage(contentResolver)
