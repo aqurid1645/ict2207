@@ -14,7 +14,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +34,8 @@ fun ForumMainScreen(navController: NavController, viewModel: ForumScreenViewMode
             FloatingActionButton(
                 onClick = {
                     navController.navigate("forum-post")
-                }
+                },
+                modifier = Modifier.padding(60.dp)
             ) {
                 Text(text = "Create Post")
             }
